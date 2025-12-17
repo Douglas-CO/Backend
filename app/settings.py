@@ -1,15 +1,27 @@
 import os
+from urllib.parse import urlparse, parse_qsl
 from decouple import config
-import dj_database_url
 
 # SECURITY
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = ['*']  # Simple para pruebas
+ALLOWED_HOSTS = ['*']  # Solo para desarrollo
 
-# BASE DATABASE CONFIG
+# Parsear la URL de la base de datos
+database_url = config('DATABASE_URL')  # Se asegura que sea str
+parsed_url = urlparse(database_url)
+
 DATABASES = {
-    'default': dj_database_url.parse(config('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': parsed_url.path.lstrip('/'),  # elimina el primer /
+        'USER': parsed_url.username,
+        'PASSWORD': parsed_url.password,
+        'HOST': parsed_url.hostname,
+        'PORT': parsed_url.port or 5432,  # puerto por defecto 5432
+        # sslmode y channel_binding
+        'OPTIONS': dict(parse_qsl(parsed_url.query)),
+    }
 }
 
 # APPS
@@ -22,6 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    'usuarios',
+    'django_extensions',
 ]
 
 # MIDDLEWARE
@@ -36,7 +50,7 @@ MIDDLEWARE = [
 ]
 
 # URLS
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'app.urls'
 
 # TEMPLATES
 TEMPLATES = [
@@ -55,10 +69,10 @@ TEMPLATES = [
     },
 ]
 
-# WSGI
-WSGI_APPLICATION = 'config.wsgi.application'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+WSGI_APPLICATION = 'app.wsgi.application'
 
-# PASSWORD VALIDATION (simple para dev)
+# PASSWORD VALIDATION (solo dev)
 AUTH_PASSWORD_VALIDATORS = []
 
 # I18N
