@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from usuarios.models.usuario_models import Usuario
 from django.contrib.auth.hashers import make_password
 
@@ -16,6 +17,8 @@ class UsuarioRepository:
             password=make_password(password)
         )
         usuario.save()
+        # Limpiar cache automáticamente
+        cache.delete("usuarios_list")  # Solo borra la lista de usuarios
         return usuario
 
     @staticmethod
@@ -41,9 +44,14 @@ class UsuarioRepository:
     @staticmethod
     def listar_todos():
         """
-        Devuelve todos los usuarios.
+        Devuelve todos los usuarios. Usa cache si está disponible.
         """
-        return Usuario.objects.all()
+        usuarios = cache.get("usuarios_list")
+        if usuarios is None:
+            usuarios = list(Usuario.objects.all())
+            # Cache por 5 minutos
+            cache.set("usuarios_list", usuarios, timeout=60*5)
+        return usuarios
 
     @staticmethod
     def actualizar_usuario(usuario: Usuario, **kwargs):
@@ -56,6 +64,8 @@ class UsuarioRepository:
         if password:
             usuario.password = make_password(password)
         usuario.save()
+        # Limpiar cache automáticamente
+        cache.delete("usuarios_list")
         return usuario
 
     @staticmethod
@@ -64,3 +74,5 @@ class UsuarioRepository:
         Elimina un usuario de la base de datos.
         """
         usuario.delete()
+        # Limpiar cache automáticamente
+        cache.delete("usuarios_list")

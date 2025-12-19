@@ -4,15 +4,15 @@ from rest_framework.views import APIView
 from rest_framework import status
 from drf_yasg import openapi
 from rest_framework.pagination import PageNumberPagination
-from django.db.models import Q
+from django.core.cache import cache
 
 from usuarios.models.usuario_models import Usuario
 from usuarios.services.usuario_services import UsuarioService
 from usuarios.serializers.usuario_serializers import UsuarioSerializer
-from usuarios.filters.usuario_filters import UsuarioFilter
 
 
 class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10  # <-- valor por defecto
     page_size_query_param = 'page_size'
     max_page_size = 100
 
@@ -40,13 +40,20 @@ class UsuarioListCreateView(APIView):
         responses={200: UsuarioSerializer(many=True)}
     )
     def get(self, request):
-        usuarios_qs = Usuario.objects.all()
+        # Intentar obtener de cache
+        usuarios_list = cache.get("usuarios_list")
+        if usuarios_list is None:
+            usuarios_list = list(Usuario.objects.all())
+            cache.set("usuarios_list", usuarios_list, timeout=60*5)
 
-        # Obtener filtros desde query params
+        # Convertir lista cacheada a queryset para poder filtrar
+        usuarios_qs = Usuario.objects.filter(
+            uuid__in=[u.uuid for u in usuarios_list])
+
+        # Aplicar filtros
         nombre = request.GET.get('nombre')
         username = request.GET.get('username')
         cedula = request.GET.get('cedula')
-        q = request.GET.get('q')
 
         if nombre:
             usuarios_qs = usuarios_qs.filter(nombre__icontains=nombre)
@@ -60,17 +67,17 @@ class UsuarioListCreateView(APIView):
         page = paginator.paginate_queryset(usuarios_qs, request)
         serializer = UsuarioSerializer(page, many=True)
 
-        # Construir meta correctamente
-        if page is not None:
-            meta = {
-                "next": paginator.get_next_link(),
-                "previous": paginator.get_previous_link(),
-                "count": page.paginator.count,
-                "total_pages": page.paginator.num_pages
-            }
-        else:
-            meta = {"next": None, "previous": None,
-                    "count": 0, "total_pages": 0}
+        # Meta información
+        total_count = usuarios_qs.count()
+        total_pages = (total_count // paginator.get_page_size(request)) + \
+                      (1 if total_count % paginator.get_page_size(request) else 0)
+
+        meta = {
+            "next": paginator.get_next_link(),
+            "previous": paginator.get_previous_link(),
+            "count": total_count,
+            "total_pages": total_pages
+        }
 
         response_data = {
             "status": 200,
@@ -89,6 +96,8 @@ class UsuarioListCreateView(APIView):
     )
     def post(self, request):
         usuario = UsuarioService.crear_usuario(request.data)
+        # Limpiar cache automáticamente al crear un usuario
+        cache.delete("usuarios_list")
         return Response(usuario, status=status.HTTP_201_CREATED)
 
 

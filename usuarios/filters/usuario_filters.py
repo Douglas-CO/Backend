@@ -5,6 +5,13 @@ from django.db.models import Q
 class UsuarioFilter:
 
     @staticmethod
+    def filtrar_por_id(id: int):
+        """
+        Filtra usuarios cuyo id contenga el number dado (case-insensitive).
+        """
+        return Usuario.objects.filter(id__icontains=id)
+
+    @staticmethod
     def filtrar_por_nombre(nombre: str):
         """
         Filtra usuarios cuyo nombre contenga el string dado (case-insensitive).
