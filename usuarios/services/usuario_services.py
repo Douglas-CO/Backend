@@ -48,14 +48,3 @@ class UsuarioService:
         serializer.is_valid(raise_exception=True)
         usuario = serializer.save()
         return serializer.data
-
-    @staticmethod
-    def eliminar_usuario(uuid):
-        """
-        Elimina un usuario por UUID.
-        """
-        usuario = UsuarioRepository.obtener_por_uuid(uuid)
-        if usuario:
-            UsuarioRepository.eliminar_usuario(usuario)
-            return True
-        return False

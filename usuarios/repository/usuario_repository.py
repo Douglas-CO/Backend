@@ -67,12 +67,3 @@ class UsuarioRepository:
         # Limpiar cache automáticamente
         cache.delete("usuarios_list")
         return usuario
-
-    @staticmethod
-    def eliminar_usuario(usuario: Usuario):
-        """
-        Elimina un usuario de la base de datos.
-        """
-        usuario.delete()
-        # Limpiar cache automáticamente
-        cache.delete("usuarios_list")
