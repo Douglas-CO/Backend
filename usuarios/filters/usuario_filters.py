@@ -1,51 +1,45 @@
 from usuarios.models.usuario_models import Usuario
+from usuarios.models.theme_models import Theme
 from django.db.models import Q
 
 
 class UsuarioFilter:
 
     @staticmethod
-    def filtrar_por_id(id: int):
+    def filtrar_por_campos(usuario_filters: dict = None, theme_filters: dict = None):
         """
-        Filtra usuarios cuyo id contenga el number dado (case-insensitive).
+        Filtra usuarios según campos del usuario y del theme.
+        - usuario_filters: dict con filtros directos del modelo Usuario
+        - theme_filters: dict con filtros para el modelo Theme (ForeignKey), excluye 'palette'
         """
-        return Usuario.objects.filter(id__icontains=id)
+        qs = Usuario.objects.all()
 
-    @staticmethod
-    def filtrar_por_nombre(nombre: str):
-        """
-        Filtra usuarios cuyo nombre contenga el string dado (case-insensitive).
-        """
-        return Usuario.objects.filter(nombre__icontains=nombre)
+        # Filtros directos de Usuario
+        if usuario_filters:
+            qs = qs.filter(**usuario_filters)
 
-    @staticmethod
-    def filtrar_por_username(username: str):
-        """
-        Filtra usuarios por username exacto.
-        """
-        return Usuario.objects.filter(username=username)
+        # Filtros dinámicos de Theme (excluyendo palette)
+        if theme_filters:
+            theme_lookups = {}
+            for k, v in theme_filters.items():
+                if v is not None and k != "palette":  # ignorar palette
+                    theme_lookups[f"theme__{k}__icontains"] = v
+            if theme_lookups:
+                qs = qs.filter(**theme_lookups)
 
-    @staticmethod
-    def filtrar_por_cedula(cedula: str):
-        """
-        Filtra usuarios por cédula exacta.
-        """
-        return Usuario.objects.filter(cedula=cedula)
+        return qs
 
     @staticmethod
     def busqueda_general(query: str):
         """
-        Búsqueda general en nombre, username o cédula.
+        Búsqueda general en Usuario y Theme de forma dinámica (sin palette)
         """
         return Usuario.objects.filter(
             Q(nombre__icontains=query) |
             Q(username__icontains=query) |
-            Q(cedula__icontains=query)
+            Q(cedula__icontains=query) |
+            Q(theme__name__icontains=query) |
+            Q(theme__code__icontains=query) |
+            Q(theme__description__icontains=query) |
+            Q(theme__state__icontains=query)
         )
-
-    @staticmethod
-    def activos():
-        """
-        Si tu modelo tiene un campo de estado o activo, puedes filtrarlos aquí.
-        """
-        return Usuario.objects.filter(is_active=True)  # ejemplo si agregas is_active

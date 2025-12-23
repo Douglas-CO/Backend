@@ -13,6 +13,7 @@ class LoginView(APIView):
     """
     Endpoint para login de usuario.
     """
+    permission_classes = []
 
     @swagger_auto_schema(
         operation_description="Login de usuario y obtención de token",
@@ -38,7 +39,7 @@ class LogoutView(APIView):
     """
     Endpoint para cerrar sesión de un usuario.
     """
-    permission_classes = [TokenRequiredPermission]
+    permission_classes = [TokenRequiredPermission]  # Requiere token válido
 
     @swagger_auto_schema(
         operation_description="Cerrar sesión de un usuario eliminando su token",

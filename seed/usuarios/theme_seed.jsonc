@@ -1,0 +1,146 @@
+[
+    {
+        "name": "Azul Oceánico",
+        "code": "blue_palette",
+        "description": "Confianza y Calma",
+        "state": true,
+        "pallete": {
+            "primary": "#007BFF",
+            "secondary_first": "#0056b3",
+            "secondary_second": "#3399FF",
+            "secondary_third": "#66B2FF",
+            "tertiary_first": "#003f7f",
+            "tertiary_second": "#80ccff",
+            "tertiary_third": "#cce6ff",
+            "additional_first": "#E6F0FA",
+            "additional_second": "#D0E7FF",
+            "additional_third": "#B3D7FF"
+        }
+    },
+    {
+        "name": "Rojo Carmín",
+        "code": "red_pallete",
+        "description": "Energía y Alerta",
+        "state": true,
+        "pallete": {
+            "primary": "#FF4136",
+            "secondary_first": "#CC342E",
+            "secondary_second": "#FF726F",
+            "secondary_third": "#FF6F61",
+            "tertiary_first": "#992622",
+            "tertiary_second": "#FFB3AF",
+            "tertiary_third": "#FFD6D6",
+            "additional_first": "#FFE6E6",
+            "additional_second": "#FFF0F0",
+            "additional_third": "#FFF5F5"
+        }
+    },
+    {
+        "name": "Amarillo Sol",
+        "code": "yellow_pallete",
+        "description": "Optimismo y Claridad",
+        "state": true,
+        "pallete": {
+            "primary": "#FFDC00",
+            "secondary_first": "#FFD700",
+            "secondary_second": "#FFE066",
+            "secondary_third": "#FFF176",
+            "tertiary_first": "#CCB200",
+            "tertiary_second": "#FFF9B0",
+            "tertiary_third": "#FFFBE0",
+            "additional_first": "#FFFAE6",
+            "additional_second": "#FFFEE0",
+            "additional_third": "#FFFFF2"
+        }
+    },
+    {
+        "name": "Verde Esmeralda",
+        "code": "green_pallete",
+        "description": "Crecimiento y Salud",
+        "state": true,
+        "pallete": {
+            "primary": "#2ECC71",
+            "secondary_first": "#27AE60",
+            "secondary_second": "#58D68D",
+            "secondary_third": "#82E0AA",
+            "tertiary_first": "#1E8449",
+            "tertiary_second": "#A9DFBF",
+            "tertiary_third": "#D5F5E3",
+            "additional_first": "#E9F7EF",
+            "additional_second": "#F0FFF5",
+            "additional_third": "#F6FFFA"
+        }
+    },
+    {
+        "name": "Púrpura Real",
+        "code": "purple_pallete",
+        "description": "Creatividad y Lujo",
+        "state": true,
+        "pallete": {
+            "primary": "#9B59B6",
+            "secondary_first": "#8E44AD",
+            "secondary_second": "#BB8FCE",
+            "secondary_third": "#D7BDE2",
+            "tertiary_first": "#6C3483",
+            "tertiary_second": "#E8DAEF",
+            "tertiary_third": "#F4ECF7",
+            "additional_first": "#FAF0FB",
+            "additional_second": "#FBF5FF",
+            "additional_third": "#FDF9FF"
+        }
+    },
+    {
+        "name": "Escala de Oscuros",
+        "code": "black_pallete",
+        "description": "Sofisticación y Contraste",
+        "state": true,
+        "pallete": {
+            "primary": "#000000",
+            "secondary_first": "#1C1C1C",
+            "secondary_second": "#2F2F2F",
+            "secondary_third": "#3D3D3D",
+            "tertiary_first": "#4F4F4F",
+            "tertiary_second": "#6E6E6E",
+            "tertiary_third": "#8C8C8C",
+            "additional_first": "#A6A6A6",
+            "additional_second": "#D9D9D9",
+            "additional_third": "#F2F2F2"
+        }
+    },
+    {
+        "name": "Escala de Claros",
+        "code": "white_pallete",
+        "description": "Pureza y Amplitud",
+        "state": true,
+        "pallete": {
+            "primary": "#FFFFFF",
+            "secondary_first": "#FAFAFA",
+            "secondary_second": "#F5F5F5",
+            "secondary_third": "#EEEEEE",
+            "tertiary_first": "#E0E0E0",
+            "tertiary_second": "#CCCCCC",
+            "tertiary_third": "#BFBFBF",
+            "additional_first": "#AFAFAF",
+            "additional_second": "#999999",
+            "additional_third": "#7F7F7F"
+        }
+    },
+    {
+        "name": "Naranja Atardecer",
+        "code": "orange_pallete",
+        "description": "Entusiasmo y Acción",
+        "state": true,
+        "pallete": {
+            "primary": "#FF851B",
+            "secondary_first": "#E67E22",
+            "secondary_second": "#FFA94D",
+            "secondary_third": "#FFB266",
+            "tertiary_first": "#CC7000",
+            "tertiary_second": "#FFD6B0",
+            "tertiary_third": "#FFE6CC",
+            "additional_first": "#FFF0E0",
+            "additional_second": "#FFF5EC",
+            "additional_third": "#FFFBF6"
+        }
+    }
+]
