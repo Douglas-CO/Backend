@@ -73,7 +73,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 WSGI_APPLICATION = 'app.wsgi.application'
 
 # PASSWORD VALIDATION (solo dev)
-AUTH_PASSWORD_VALIDATORS = []
+# AUTH_PASSWORD_VALIDATORS = []
 
 # I18N
 LANGUAGE_CODE = 'en-us'
@@ -85,7 +85,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # Comentamos o eliminamos las que no quieres
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # Opcional: si quieres usar JWT de DRF
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # se usará con tu TokenRequiredPermission
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
