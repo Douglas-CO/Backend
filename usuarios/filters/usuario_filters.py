@@ -1,5 +1,4 @@
 from usuarios.models.usuario_models import Usuario
-from usuarios.models.theme_models import Theme
 from django.db.models import Q
 
 

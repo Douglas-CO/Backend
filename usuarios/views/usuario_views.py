@@ -23,7 +23,7 @@ class UsuarioListCreateView(APIView):
     GET: Lista todos los usuarios con paginación y filtros
     POST: Crea un nuevo usuario
     """
-    permission_classes = [TokenRequiredPermission]
+    permission_classes = []
 
     @swagger_auto_schema(
         operation_description="Lista todos los usuarios con paginación y filtros",

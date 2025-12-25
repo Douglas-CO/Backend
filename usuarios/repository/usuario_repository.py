@@ -1,12 +1,12 @@
 from django.core.cache import cache
-from usuarios.models.usuario_models import Usuario
 from django.contrib.auth.hashers import make_password
 
+from usuarios.models.usuario_models import Usuario
 
 class UsuarioRepository:
 
     @staticmethod
-    def crear_usuario(nombre: str, cedula: str, username: str, password: str) -> Usuario:
+    def crear_usuario(nombre: str, cedula: str, username: str, password: str, theme: int) -> Usuario:
         """
         Crea un nuevo usuario con password hasheado.
         """
@@ -14,7 +14,8 @@ class UsuarioRepository:
             nombre=nombre,
             cedula=cedula,
             username=username,
-            password=make_password(password)
+            password=make_password(password),
+            theme=theme
         )
         usuario.save()
         # Limpiar cache automáticamente
@@ -28,16 +29,6 @@ class UsuarioRepository:
         """
         try:
             return Usuario.objects.get(uuid=uuid)
-        except Usuario.DoesNotExist:
-            return None
-
-    @staticmethod
-    def obtener_por_username(username):
-        """
-        Obtiene un usuario por su username.
-        """
-        try:
-            return Usuario.objects.get(username=username)
         except Usuario.DoesNotExist:
             return None
 

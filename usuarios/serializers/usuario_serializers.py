@@ -38,7 +38,6 @@ class UsuarioSerializer(serializers.ModelSerializer):
         validated_data['password'] = make_password(validated_data['password'])
 
         # Si no viene theme, asignar por defecto id=1 si existe
-        from usuarios.models.theme_models import Theme
         if 'theme' not in validated_data:
             try:
                 validated_data['theme'] = Theme.objects.get(id=1)

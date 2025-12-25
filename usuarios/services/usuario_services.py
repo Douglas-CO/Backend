@@ -1,4 +1,3 @@
-from usuarios.models.usuario_models import Usuario
 from usuarios.models.theme_models import Theme
 from usuarios.repository.usuario_repository import UsuarioRepository
 from usuarios.serializers.usuario_serializers import UsuarioSerializer
@@ -11,49 +10,42 @@ class UsuarioService:
 
     @staticmethod
     def crear_usuario(data: dict):
-        """
-        Crea un usuario usando UsuarioSerializer.
-        Si no se envía 'theme', asigna Theme con id=1 por defecto (si existe).
-        """
-        if 'theme' not in data:
-            try:
-                data['theme'] = Theme.objects.get(id=1).id
-            except Theme.DoesNotExist:
-                pass  # Si no existe el theme 1, no se asigna nada
+        payload = data.copy()
 
-        serializer = UsuarioSerializer(data=data)
+        # Default theme si no viene
+        if 'theme' not in payload:
+            theme = Theme.objects.filter(id=1).first()
+            if theme:
+                payload['theme'] = theme.id
+
+        serializer = UsuarioSerializer(data=payload)
         serializer.is_valid(raise_exception=True)
-        usuario = serializer.save()
-        return serializer.data  # Devuelve datos serializados, incluyendo theme_data
+        serializer.save()
+        return serializer.data
 
     @staticmethod
     def listar_usuarios():
-        """
-        Lista todos los usuarios.
-        """
         usuarios = UsuarioRepository.listar_todos()
-        # theme_data incluido
         return UsuarioSerializer(usuarios, many=True).data
 
     @staticmethod
     def obtener_usuario(uuid):
-        """
-        Obtiene un usuario por UUID.
-        """
         usuario = UsuarioRepository.obtener_por_uuid(uuid)
         if not usuario:
             return None
-        return UsuarioSerializer(usuario).data  # theme_data incluido
+        return UsuarioSerializer(usuario).data
 
     @staticmethod
     def actualizar_usuario(uuid, data: dict):
-        """
-        Actualiza un usuario por UUID.
-        """
         usuario = UsuarioRepository.obtener_por_uuid(uuid)
         if not usuario:
             return None
-        serializer = UsuarioSerializer(usuario, data=data, partial=True)
+
+        serializer = UsuarioSerializer(
+            usuario,
+            data=data,
+            partial=True
+        )
         serializer.is_valid(raise_exception=True)
-        usuario = serializer.save()
-        return serializer.data  # theme_data incluido
+        serializer.save()
+        return serializer.data
