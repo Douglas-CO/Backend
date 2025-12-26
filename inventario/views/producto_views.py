@@ -66,7 +66,7 @@ class ProductoListCreateView(APIView):
         responses={201: ProductoSerializer}
     )
     def post(self, request):
-        producto = ProductoService.crear_producto(request.data)
+        producto = ProductoService.create_producto(request.data)
         cache.delete("productos_qs")
         return Response(producto, status=status.HTTP_201_CREATED)
 
@@ -79,7 +79,7 @@ class ProductoDetailView(APIView):
         responses={200: ProductoSerializer, 404: "Not Found"}
     )
     def get(self, request, uuid):
-        producto = ProductoService.obtener_producto(uuid)
+        producto = ProductoService.get_producto(uuid)
         if not producto:
             return Response(
                 {"detail": "Producto no encontrado"},
@@ -93,7 +93,7 @@ class ProductoDetailView(APIView):
         responses={200: ProductoSerializer}
     )
     def patch(self, request, uuid):
-        producto = ProductoService.actualizar_producto(uuid, request.data)
+        producto = ProductoService.upd_producto(uuid, request.data)
         if not producto:
             return Response(
                 {"detail": "Producto no encontrado"},

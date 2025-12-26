@@ -25,5 +25,6 @@ urlpatterns = [
          cache_timeout=0), name='schema-redoc'),
     # models
     path('api/', include('inventario.urls')), 
-    path('api/', include('usuarios.urls')), 
+    path('api/', include('usuarios.urls')),
+    path('api/', include('venta.urls')),
 ]

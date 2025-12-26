@@ -17,7 +17,7 @@ class ProductoService:
         return ProductoSerializer(producto, many=True).data
 
     @staticmethod
-    def get_usuario(uuid):
+    def get_producto(uuid):
         producto = ProductoRepository.get_uuid(uuid)
         if not producto:
             return None
