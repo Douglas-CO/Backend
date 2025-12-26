@@ -1,4 +1,3 @@
-from inventario.models.categoria_models import Categoria
 from inventario.repository.categoria_repository import CategoriaRepository
 from inventario.serializers.categoria_serializers import CategoriaSerializer
 

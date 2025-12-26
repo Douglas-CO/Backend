@@ -1,7 +1,14 @@
 # Backend
 Backend
 
-pip install -r requirements.txt
+python3 -m venv venv
+source venv/bin/activate
 
-python manage.py makemigrations
+pip install -r requirements.txt
+sudo apt install postgresql-client
+
+python manage.py makemigrations usuarios inventario
 python manage.py migrate
+
+
+python manage.py runserver

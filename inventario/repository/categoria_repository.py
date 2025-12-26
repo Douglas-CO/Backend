@@ -4,7 +4,7 @@ from inventario.models.categoria_models import Categoria
 
 class CategoriaRepository:
     @staticmethod
-    def crear_categoria(name: str, code: str, description: str, state: str) -> Categoria:
+    def crear_categoria(name: str, code: str, description: str, state: bool) -> Categoria:
         categoria = Categoria(
             name=name,
             code=code,
