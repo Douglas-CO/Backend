@@ -19,3 +19,4 @@ django-widget-tweaks==1.4.12
 djangorestframework==3.14.0
 django-extensions
 djangorestframework-simplejwt
+requests
