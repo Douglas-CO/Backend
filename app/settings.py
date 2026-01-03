@@ -3,7 +3,7 @@ from urllib.parse import urlparse, parse_qsl
 from decouple import config
 
 # SECURITY
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'demo-secret-key'
 DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = ['*']  # Solo para desarrollo
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'inventario',
     'venta',
     'cliente',
+    'corsheaders'
 ]
 
 # MIDDLEWARE
