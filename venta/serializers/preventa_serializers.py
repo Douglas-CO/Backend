@@ -18,6 +18,8 @@ class PreventaSerializer(serializers.ModelSerializer):
         fields = [
             'uuid',
             'solicitud_servicio',
+            'usuario',
+            'status',
             'productos',
             'created_at',
             'modified_at',
@@ -26,9 +28,7 @@ class PreventaSerializer(serializers.ModelSerializer):
 
     def validate_productos(self, value):
         if not value:
-            raise serializers.ValidationError(
-                "El campo productos no puede estar vacío"
-            )
+            raise serializers.ValidationError("El campo productos no puede estar vacío")
 
         productos_ids = [p["producto"] for p in value]
 

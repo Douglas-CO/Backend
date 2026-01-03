@@ -15,9 +15,10 @@ class PreventaFilter:
 
         # -------- Preventa --------
         if params.get("preventa_status"):
-            qs = qs.filter(
-                status=params["preventa_status"]
-            )
+            qs = qs.filter(status=params["preventa_status"])
+
+        if params.get("usuario"):
+            qs = qs.filter(usuario_id=params["usuario"])
 
         # -------- SolicitudServicio --------
         if params.get("nombre"):

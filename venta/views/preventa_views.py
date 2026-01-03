@@ -27,8 +27,10 @@ class PreventaListCreateView(APIView):
                               type=openapi.TYPE_INTEGER),
 
             # -------- Preventa --------
-            openapi.Parameter('preventa_status',
+            openapi.Parameter('status',
                               openapi.IN_QUERY, type=openapi.TYPE_STRING),
+            openapi.Parameter('usuario',
+                              openapi.IN_QUERY, type=openapi.TYPE_INTEGER,description="ID del usuario creador"),
 
             # -------- SolicitudServicio --------
             openapi.Parameter('nombre', openapi.IN_QUERY,

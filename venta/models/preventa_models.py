@@ -1,10 +1,11 @@
 import uuid
 from django.db import models
 
-from config.models.AuditDateModel import AuditDateModel
-from venta.models.solicitud_servicio_models import SolicitudServicio
+from usuarios.models.usuario_models import Usuario
 from inventario.models.producto_models import Producto
+from config.models.AuditDateModel import AuditDateModel
 from config.choices.venta_choices import STATUS_CHOICES
+from venta.models.solicitud_servicio_models import SolicitudServicio
 
 
 class Preventa(AuditDateModel):
@@ -17,7 +18,7 @@ class Preventa(AuditDateModel):
     status = models.CharField(
         max_length=10,
         choices=STATUS_CHOICES,
-        default="PENDIENTE"  # Ajusta según tus STATUS_CHOICES
+        default="PENDIENTE"
     )
 
     solicitud_servicio = models.ForeignKey(
@@ -26,11 +27,13 @@ class Preventa(AuditDateModel):
         related_name="preventas"
     )
 
-    class Meta:
-        verbose_name = "Preventa"
-        verbose_name_plural = "Preventas"
-        ordering = ["-created_at"]
-
+    usuario = models.ForeignKey(
+        Usuario,
+        on_delete=models.SET_DEFAULT,
+        default=1,
+        related_name="usuarios"
+    )
+    
     def __str__(self):
         return f"Preventa {self.uuid}"
 
