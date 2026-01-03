@@ -31,9 +31,9 @@ class Preventa(AuditDateModel):
         Usuario,
         on_delete=models.SET_DEFAULT,
         default=1,
-        related_name="usuarios"
+        related_name="preventas"
     )
-    
+
     def __str__(self):
         return f"Preventa {self.uuid}"
 

@@ -6,6 +6,7 @@ from usuarios.models.usuario_models import Usuario
 from config.models.AuditDateModel import AuditDateModel
 from config.choices.venta_choices import SEX_CHOICES, STATUS_CHOICES
 
+
 class SolicitudServicio(AuditDateModel):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     nombre = models.CharField(max_length=150)
@@ -16,7 +17,8 @@ class SolicitudServicio(AuditDateModel):
     )
     celular = models.CharField(
         max_length=10,
-        validators=[RegexValidator(r'^\d{10}$', message="Debe tener 10 dígitos")]
+        validators=[RegexValidator(
+            r'^\d{10}$', message="Debe tener 10 dígitos")]
     )
     sexo = models.CharField(
         max_length=10,
@@ -33,7 +35,7 @@ class SolicitudServicio(AuditDateModel):
         Usuario,
         on_delete=models.SET_DEFAULT,
         default=1,
-        related_name="usuarios"
+        related_name="solicitudes_servicio"
     )
 
     def __str__(self):
